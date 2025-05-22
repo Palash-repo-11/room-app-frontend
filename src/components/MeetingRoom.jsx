@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useMeeting } from '../provider/MeetingProvider';
+import { io } from 'socket.io-client';
 
 const MeetingRoom = () => {
   const { id: meetingId } = useParams();
@@ -12,18 +13,20 @@ const MeetingRoom = () => {
 
   useEffect(() => {
     const validateAndJoinMeeting = async () => {
+      console.log("skjhkjhkjhj")
       try {
         const res = await axios.post('http://localhost:7500/meeting/verify', {
           meetingId,
         });
-
+        console.log("kjhjhjkhjk")
         if (res.data.success && userInfo) {
+          console.log("kjnkjj")
           setIsValid(true);
 
           // ✅ Socket is created only now
-          const { io } = await import('socket.io-client');
+          // const { io } = await import('socket.io-client');
           socketRef.current = io('http://localhost:7500');
-
+          console.log(socketRef.current)
           socketRef.current.emit('join-room', {
             roomId: meetingId,
             userId: userInfo.id,
@@ -45,13 +48,13 @@ const MeetingRoom = () => {
 
     validateAndJoinMeeting();
 
-    return () => {
-      if (socketRef.current) {
-        socketRef.current.disconnect();
-        console.log('Socket disconnected');
-      }
-    };
-  }, [meetingId, userInfo]);
+    // return () => {
+    //   if (socketRef.current) {
+    //     socketRef.current.disconnect();
+    //     console.log('Socket disconnected');
+    //   }
+    // };
+  }, []);
 
   if (!isValid) return <div>Validating meeting...</div>;
 
@@ -64,3 +67,5 @@ const MeetingRoom = () => {
 };
 
 export default MeetingRoom;
+
+
