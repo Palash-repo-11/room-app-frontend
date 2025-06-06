@@ -6,11 +6,9 @@ import { BrowserRouter } from 'react-router-dom'
 import { MeetingProvider } from './provider/MeetingProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
     <MeetingProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </MeetingProvider>
-  </StrictMode>,
 )

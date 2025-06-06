@@ -66,8 +66,8 @@ const Dashboard = () => {
   const handleCreateMeeting = async () => {
     try {
       const res = await axios.post("http://localhost:7500/meeting/createmeeting", { userId });
-      console.log(res.data,"res.data")
-      if (res.data?.message==='Meeting created successfully') {
+      console.log(res.data, "res.data")
+      if (res.data?.message === 'Meeting created successfully') {
         navigate(`/dashboard/meeting/${res.data.meeting.id}`);
       }
     } catch (err) {
@@ -76,7 +76,7 @@ const Dashboard = () => {
   };
 
   const handleJoinMeeting = () => {
-    console.log("khkkhl;")
+    navigate(`/dashboard/meeting/${joinMeetingId}`);
   };
 
   return (
